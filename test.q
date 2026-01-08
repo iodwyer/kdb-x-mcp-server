@@ -28,6 +28,9 @@ trade:([]time:.z.d+asc rows?.z.t;sym:rows?`AAPL`GOOG`MSFT`TSLA`AMZN;price:rows?1
         price within dict`minPrice`maxPrice
     }
 
+// @example .api.topTradedSym[3]
+.api.topTradedSym:{[n] string key n sublist desc exec count i by sym from trade}
+
 
 // @example .mcp.apiCall[`.api.simple;(`AAPL;10f)]
 .mcp.apiCall:{[api;args] 

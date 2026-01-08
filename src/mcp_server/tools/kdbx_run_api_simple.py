@@ -14,8 +14,8 @@ async def api_simple_query_impl(ticker: str | list[str], price: float) -> Dict[s
         if 0==len(result):
             return {"status": "success", "data": [], "message": "No rows returned"}
 
-        # rows = result.py()
-        rows = result.pd()
+        rows = result.py()
+        # rows = result.pd()
 
         logger.info(f"Query returned {len(rows)} rows.")
         return {"status": "success", "data": rows}
