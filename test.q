@@ -5,19 +5,23 @@
 .log:.logger.createLog[]
 
 rows:10000
-trade:([]time:.z.d+asc rows?.z.t;sym:rows?`AAPL`GOOG`MSFT`TSLA`AMZN;price:rows?100f;size:rows?1000)
+trade:([] time:.z.d+asc rows?.z.t; sym:rows?`AAPL`GOOG`MSFT`TSLA`AMZN; price:rows?100f; size:rows?1000)
 
 // @example .api.simple[`AAPL`MSFT;10f]
+// @prompt "show me trades for AAPL and MSFT with price greater than 10" 
 .api.simple:{[s;p] select from trade where sym in s, price > p}
 
 // @example .api.ohlc[`AAPL;1800]
+// @prompt "give me 30 minute OHLC for AAPL"
 .api.ohlc:{[s;interval] 
     0!select open:first price, high:max price, low:min price, close:last price 
     by time:(0D00:00:01 * interval) xbar time, sym 
     from trade 
-    where sym in s}
+    where sym in s
+    }
 
 // @example .api.complex[`sd`ed`tickers`minPrice`maxPrice!(.z.d;.z.d+1;`AAPL`MSFT;10f;100f)]
+// @prompt "show me trades between yesterday and today for AAPL and MSFT with price between 50 and 100"
 .api.complex:{[dict] 
     show .dbg.dict:dict;
     select 
@@ -29,6 +33,8 @@ trade:([]time:.z.d+asc rows?.z.t;sym:rows?`AAPL`GOOG`MSFT`TSLA`AMZN;price:rows?1
     }
 
 // @example .api.topTradedSym[3]
+// @prompt "what are top 5 most frequently traded symbols"
+// @prompt "give me 30 minute OHLC for the top 3 traded symbols"
 .api.topTradedSym:{[n] string key n sublist desc exec count i by sym from trade}
 
 
