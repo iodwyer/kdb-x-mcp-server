@@ -53,10 +53,10 @@ trade:([] time:.z.d+asc rows?.z.t; sym:rows?`AAPL`GOOG`MSFT`TSLA`AMZN; price:row
 
 
 // @usage .mcp.listApis[] 
-.mcp.listApis:{.Q.dd'[`.api;(key`.api) except `]}  // where type value x is function (100h)
+// .mcp.listApis:{.Q.dd'[`.api;(key`.api) except `]}  // where type value x is function (100h)
 
 
-// Next: expand for syms, more flexibility with price ?
+// Next: more flexibility with price ?
 
 // api with dictionary input `sd`ed`tickers`minPrice`maxPrice!(sd;ed;syms;minPrice;maxPrice) 
 // timestamps inputs 

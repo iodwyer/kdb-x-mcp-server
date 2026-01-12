@@ -9,7 +9,9 @@ async def api_simple_query_impl(ticker: str | list[str], price: float) -> Dict[s
     try:
         conn = get_kdb_connection()
 
-        result = conn.mcp.apiCall('.api.simple', [kx.SymbolVector([ticker]) , price])
+        ticker = kx.SymbolAtom(ticker) if isinstance(ticker, str) else kx.SymbolVector(ticker) if isinstance(ticker, list) and all(isinstance(s, str) for s in ticker) else (_ for _ in ()).throw(TypeError("Expected str or list[str]"))
+        
+        result = conn.mcp.apiCall('.api.simple', [ticker, price])
 
         if 0==len(result):
             return {"status": "success", "data": [], "message": "No rows returned"}
